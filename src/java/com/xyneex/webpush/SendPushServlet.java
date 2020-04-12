@@ -16,6 +16,7 @@ import java.io.PrintWriter;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.security.Security;
 import java.security.spec.InvalidKeySpecException;
 import java.util.concurrent.ExecutionException;
 import javax.servlet.ServletException;
@@ -26,6 +27,7 @@ import javax.servlet.http.HttpSession;
 import nl.martijndwars.webpush.Notification;
 import nl.martijndwars.webpush.PushService;
 import org.apache.http.HttpResponse;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.jose4j.lang.JoseException;
 import org.json.JSONObject;
 
@@ -88,6 +90,7 @@ public class SendPushServlet extends HttpServlet
     {
         Notification notification;
         PushService pushService;
+        Security.addProvider(new BouncyCastleProvider());
         System.out.println("Creating the notification object...");
         // Create a notification with the endpoint, userPublicKey from the subscription and a custom payload
         notification = new Notification(
